@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Program;
+use App\Entity\Episode;
+use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -93,5 +95,61 @@ class WildController extends AbstractController
     public function index1() :Response
     {
         return $this->render('wild/show1.html.twig');
+    }
+    /**
+     * @Route("/program/{programTitle<^[a-z0-9-]+$>}", name="program")
+     * @return Response A response instance
+     */
+    public function showByProgram(string $programTitle)
+    {
+        $programTitle = preg_replace(
+            '/-/',
+            ' ',
+            ucwords(trim(strip_tags($programTitle)), "-")
+        );
+
+
+        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['title' => $programTitle]);
+
+        $seasons = $this->getDoctrine()->getRepository(Season::class)->findBy(['program_id' => $program]);
+
+        if (!$seasons) {
+            throw $this->createNotFoundException(
+                'No season found in season\'s table.'
+            );
+        }
+
+
+        return $this->render('wild/program.html.twig', [
+            'seasons' => $seasons,
+            'programTitle' => $programTitle,
+            'program' => $program,
+        ]);
+    }
+
+    /**
+     * @Route("/season/{id<^[0-9]+$>}", name="season")
+     * @return Response A response instance
+     */
+    public function showBySeason(int $id)
+    {
+
+        $season = $this->getDoctrine()->getRepository(Season::class)->findOneBy(['id' => $id]);
+        return $this->render('wild/season.html.twig', [
+            'season' => $season,
+        ]);
+    }
+
+    /**
+     * @Route("/episode/{id<^[0-9]+$>}", name="episode")
+     * @return Response A response instance
+     */
+    public function showByEpisode(int $id)
+    {
+
+        $episode = $this->getDoctrine()->getRepository(Episode::class)->findOneBy(['id' => $id]);
+        return $this->render('wild/episode.html.twig', [
+            'episode' => $episode,
+        ]);
     }
 }

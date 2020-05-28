@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ programTitle }}{% endblock %}
+{% block body %}
+
+    <h1>{{program.title}}</h1>
+
+    {% for season in seasons %}
+        <div class="media ml-5 card">
+            <div class="media-body">
+                    <p>Season : {{ season.number }}</p>
+                </a>
+                <p>Year : {{ season.year }}</p>
+                <p>Description : {{ season.description }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    <a href="{{ path('wild_index') }}">
+        Retour à l'accueil
+    </a>
+{% endblock %}
