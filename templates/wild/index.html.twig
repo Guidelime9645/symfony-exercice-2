@@ -5,8 +5,12 @@
 {% block body %}
     <h1>Toutes les séries de la table program : </h1>
     {% for program in programs %}
+
+        {% set slug = program.title|lower|trim|replace({' ' : '-'}) %}
+
         <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+            <h2> <a style="color: black" href="{{ path('wild_show', { 'slug': slug }) }}">{{ loop.index }} / {{ program.title }} - Catégorie :
+                    {{ program.category.name }} </a></h2>
             <p>{{ program.summary }}</p>
         </div>
     {% else %}

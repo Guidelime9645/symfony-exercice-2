@@ -10,9 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/wild", name="wild_")
+ */
 class WildController extends AbstractController
 {    /**
-    * @Route("/", name="wild_index")
+    * @Route("/", name="index")
     *@return Response A reponse instance
      */
     public function index() :Response
@@ -96,6 +99,7 @@ class WildController extends AbstractController
     {
         return $this->render('wild/show1.html.twig');
     }
+
     /**
      * @Route("/program/{programTitle<^[a-z0-9-]+$>}", name="program")
      * @return Response A response instance
@@ -126,7 +130,6 @@ class WildController extends AbstractController
             'program' => $program,
         ]);
     }
-
     /**
      * @Route("/season/{id<^[0-9]+$>}", name="season")
      * @return Response A response instance

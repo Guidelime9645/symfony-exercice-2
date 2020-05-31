@@ -8,6 +8,7 @@
     {% for season in seasons %}
         <div class="media ml-5 card">
             <div class="media-body">
+                <a href="{{path('wild_season', {'id': season.id})}} ">
                     <p>Season : {{ season.number }}</p>
                 </a>
                 <p>Year : {{ season.year }}</p>
@@ -15,7 +16,7 @@
             </div>
         </div>
     {% endfor %}
-    <a href="{{ path('wild_index') }}">
+    <a href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
 {% endblock %}
