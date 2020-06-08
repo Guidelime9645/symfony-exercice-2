@@ -144,11 +144,11 @@ class WildController extends AbstractController
 
         $seasons = $this->getDoctrine()->getRepository(Season::class)->findBy(['program_id' => $program]);
 
-        if (!$seasons) {
+        /*if (!$seasons) {
             throw $this->createNotFoundException(
                 'No season found in season\'s table.'
             );
-        }
+        }*/
 
 
         return $this->render('wild/program.html.twig', [
