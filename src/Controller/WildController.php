@@ -72,13 +72,13 @@ class WildController extends AbstractController
             throw $this
                 ->createNotFoundException('No slug has been sent to find a program in program\'s table.');
         }
-        $slug = preg_replace(
+        $title = preg_replace(
             '/-/',
             ' ', ucwords(trim(strip_tags($slug)), "-")
         );
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
-            ->findOneBy(['title' => mb_strtolower($slug)]);
+            ->findOneBy(['title' => mb_strtolower($title)]);
         if (!$program) {
             throw $this->createNotFoundException(
                 'No program with '.$slug.' title, found in program\'s table.'
